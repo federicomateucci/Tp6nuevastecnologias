@@ -72,14 +72,18 @@
         <div class="form-group">
           <input
             type="submit"
-            :disabled="false"
+            :disabled="
+              !$v.f.edad.required.$invalid &&
+              !$v.f.email.$dirty &&
+              !$v.f.nombre.required.$invalid
+            "
             class="btn btn-success mt-4"
-            value="enviar"
+            value= "enviar"
           />
         </div>
       </form>
     </div>
-    <!-- <pre>{{ $v }}</pre> -->
+    <!-- <pre>{{ $v }}</pre>  -->
   </section>
 </template>
 
@@ -101,6 +105,7 @@ export default {
   },
   data() {
     return {
+      submitMsg:'Enviar',
       f: this.resetForm(),
       url: "https://5f833c646b97440016f4e4f5.mockapi.io/datos",
     };
@@ -121,7 +126,7 @@ export default {
         .catch((err) => console.log("ERROR HTTP POST", err));
     },
 
-      /* Pedido de datos almacenados en el backend */
+    /* Pedido de datos almacenados en el backend */
 
     getDatosAxios() {
       this.axios(this.url)
